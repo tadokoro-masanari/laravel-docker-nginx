@@ -2,11 +2,14 @@ version: "3.9"
 
 services:
   app:
+    # コンテナの名前
     container_name: app
     build:
       context: .
+      # dockerfileの場所
       dockerfile: ./docker/php/Dockerfile
     volumes:
+    # コピーするローカルのdir:dockerのdir
       - ./backend/:/php
   nginx:
     container_name: nginx
@@ -24,8 +27,11 @@ services:
     build:
       context: .
       dockerfile: ./docker/mysql/Dockerfile
+    # port番号指定
     ports:
       - 3308:3308
+    # ↓これを指定しないとportが使えない
+    command: --port 3308 
     environment:
       MYSQL_DATABASE: laravel_docker
       MYSQL_USER: web
